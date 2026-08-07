@@ -8,12 +8,15 @@ const options = {
       version: "1.0.0",
       description: "Documentación Swagger para la API que gestiona autores y publicaciones."
     },
-    servers: [
-      {
-        url: "http://localhost:3000",
-        description: "Servidor local"
-      }
-    ]
+  servers: [
+  {
+    url:
+      process.env.RAILWAY_PUBLIC_DOMAIN
+        ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
+        : "http://localhost:3000",
+    description: "Servidor",
+  },
+],
   },
   apis: ["./src/**/*.js"]
 };
