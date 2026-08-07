@@ -8,16 +8,17 @@ require("dotenv").config();// SE INSTALA npm install dotenv PARA  CONECTAR CON E
 const { Pool } = require("pg");
 
 const pool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    host: process.env.PGHOST,
+    port: process.env.PGPORT,
+    database: process.env.PGDATABASE,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    ssl: {
+        rejectUnauthorized: false,
+    },
     max: 20,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000
 });
 
-module.exports = {
-    pool
-};
+module.exports = { pool };
