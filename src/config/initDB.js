@@ -1,3 +1,5 @@
+//src/config/initDB.js
+
 const { pool } = require("./dbConnect");
 
 const initializeDatabase = async () => {

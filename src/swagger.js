@@ -1,3 +1,5 @@
+
+//src/swagger.js
 const swaggerJSDoc = require("swagger-jsdoc");
 
 const options = {
@@ -9,14 +11,18 @@ const options = {
       description: "Documentación Swagger para la API que gestiona autores y publicaciones."
     },
   servers: [
-  {
-    url:
-      process.env.RAILWAY_PUBLIC_DOMAIN
-        ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`
-        : "http://localhost:3000",
-    description: "Servidor",
-  },
-],
+ 
+    {
+        url: "https://proyectom2manzano-cesar-luis-production.up.railway.app",
+        description: "Servidor Railway producción",
+    },
+    {
+        url: "http://localhost:3000",
+        description: "Servidor local",
+    }
+],   
+
+
   },
   apis: ["./src/**/*.js"]
 };

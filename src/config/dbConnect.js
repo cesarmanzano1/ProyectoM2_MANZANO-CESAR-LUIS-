@@ -1,47 +1,24 @@
-// ..src/config/dbConnect.js
-//CONECTA  A LA BASE DE DATOS
+//src/config/dbConnect.js
+const { Pool } = require('pg')
+const { DB_host, DB_port, DB_database, DB_user, DB_password, DB_max, DB_idleTimeoutMillis, DB_connectionTimeoutMillis, DATABASE_URL } = require('./constsConfig')
 
-/*require("dotenv").config();// SE INSTALA npm install dotenv PARA  CONECTAR CON EL .ENV*/
+const configPool = {
+    host: DB_host,
+    port: DB_port,
+    database: DB_database,
+    user: DB_user,
+    password: DB_password,
+    max: DB_max,
+    idleTimeoutMillis: DB_idleTimeoutMillis,
+    connectionTimeoutMillis: DB_connectionTimeoutMillis
+}
 
-//ME CONECTO A LA BASE DE DATOS PG ADMIN INSTALO  npm i pg
+const configPoolRailWay = {
+    connectionString: DATABASE_URL
+}
 
-/*require("dotenv").config();
+const pool = new Pool( !DATABASE_URL ? configPool : configPoolRailWay )
 
-const { Pool } = require("pg");
-
-const pool = new Pool({
-    host: process.env.PGHOST,
-    port: process.env.PGPORT,
-    database: process.env.PGDATABASE,
-    user: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-
-    ssl: process.env.NODE_ENV === "production"
-        ? { rejectUnauthorized: false }
-        : false,
-
-    max: 20,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000
-});
-
-module.exports = { pool };*/
-require("dotenv").config();
-
-const { Pool } = require("pg");
-
-const pool = new Pool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-
-    ssl: false,
-
-    max: 20,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000
-});
-
-module.exports = { pool };
+module.exports = {
+    pool
+}

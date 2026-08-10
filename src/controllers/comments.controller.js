@@ -1,3 +1,4 @@
+//src/controllers/comments.controller.js
 const { pool } = require("../config/dbConnect");
 
 // POST /comments
