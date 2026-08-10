@@ -5,6 +5,7 @@ const swaggerUi = require("swagger-ui-express");
 const { swaggerSpec } = require("./swagger");
 const { router } = require("./router/router");
 const { requestLogger } = require("./middleware/middleware");
+const cors = require("cors");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(requestLogger);
+app.use(cors());
 
 app.use(express.json());
 
