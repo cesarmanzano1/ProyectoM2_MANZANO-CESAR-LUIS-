@@ -5,7 +5,7 @@
 
 //ME CONECTO A LA BASE DE DATOS PG ADMIN INSTALO  npm i pg
 
-require("dotenv").config();
+/*require("dotenv").config();
 
 const { Pool } = require("pg");
 
@@ -25,8 +25,8 @@ const pool = new Pool({
     connectionTimeoutMillis: 2000
 });
 
-module.exports = { pool };
-/*require("dotenv").config();
+module.exports = { pool };*/
+require("dotenv").config();
 
 const { Pool } = require("pg");
 
@@ -44,4 +44,4 @@ const pool = new Pool({
     connectionTimeoutMillis: 2000
 });
 
-module.exports = { pool };*/
+module.exports = { pool };
