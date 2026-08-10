@@ -1,6 +1,6 @@
 /*src/services/libros.js */
 
-const baseDeDatos = {
+/*const baseDeDatos = {
   // Entidad: authors (id, name, email, bio, created_at)
   authors: [
     {
@@ -55,4 +55,4 @@ const baseDeDatos = {
   
   ]
 };
-module.exports.baseDeDatos=baseDeDatos;
+module.exports.baseDeDatos=baseDeDatos;/*//* */

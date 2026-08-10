@@ -1,26 +1,45 @@
+// src/controllers/post.controller.js
 
-// ..src/controllers/post.controller.js
+const { pool } = require("../config/dbConnect");
 
+// GET /posts
+const getPostController = async (req, res) => {
 
-const { baseDeDatos } = require("../services/libros")
+try {
 
-const getPostController = (req, res) => {
-
-    const posteo = baseDeDatos.posts//muestra los posteos
+    const resultado = await pool.query(
+        "SELECT * FROM posts ORDER BY id"
+    );
 
     res.status(200).json({
-        msg: "Posteos  encontrados",
-        data: posteo
-    })
+        msg: "Posteos encontrados",
+        data: resultado.rows
+    });
+
+} catch (error) {
+
+    console.error("Error al obtener los posts:", error);
+
+    res.status(500).json({
+        msg: "Error al obtener los posts"
+    });
 }
 
-const getByIspostsController = (req, res) => {
+};
+
+// GET /posts/
+const getByIspostsController = async (req, res) => {
+
+try {
 
     const { id } = req.params;
 
-    const posteo = baseDeDatos.posts.find((posteo) => posteo.id === Number(id));
+    const resultado = await pool.query(
+        "SELECT * FROM posts WHERE id = $1",
+        [id]
+    );
 
-    if (!posteo) {
+    if (resultado.rows.length === 0) {
         return res.status(404).json({
             msg: "Posteo no encontrado"
         });
@@ -28,85 +47,185 @@ const getByIspostsController = (req, res) => {
 
     res.status(200).json({
         msg: "Posteo encontrado",
-        data: posteo
+        data: resultado.rows[0]
     });
+
+} catch (error) {
+
+    console.error("Error al obtener el post:", error);
+
+    res.status(500).json({
+        msg: "Error al obtener el post"
+    });
+}
+
 };
 
-const getPostsByAuthorController = (req, res) => {
+// GET /posts/author/
+const getPostsByAuthorController = async (req, res) => {
+
+try {
 
     const { authorId } = req.params;
 
-    const autor = baseDeDatos.authors.find( author => author.id === Number(authorId) );
+    // Primero verificamos que exista el autor
+    const autor = await pool.query(
+        "SELECT * FROM authors WHERE id = $1",
+        [authorId]
+    );
 
-    if (!autor) {
+    if (autor.rows.length === 0) {
         return res.status(404).json({
             msg: "Autor no encontrado"
         });
     }
 
-    const posts = baseDeDatos.posts.filter( post => post.author_id === Number(authorId) );
+    // Buscamos los posts de ese autor
+    const posts = await pool.query(
+        "SELECT * FROM posts WHERE author_id = $1 ORDER BY id",
+        [authorId]
+    );
 
     res.status(200).json({
         msg: "Posts del autor",
-        author: autor,
-        posts: posts
+        author: autor.rows[0],
+        posts: posts.rows
     });
+
+} catch (error) {
+
+    console.error("Error al obtener los posts del autor:", error);
+
+    res.status(500).json({
+        msg: "Error al obtener los posts del autor"
+    });
+}
+
 };
 
+// POST /posts
+const posPosteo = async (req, res) => {
 
-const posPosteo = (req, res) => {
-    let posteoNuevo = req.body;
-    baseDeDatos.posts.push(posteoNuevo);
+try {
+
+    const {
+        author_id,
+        title,
+        content,
+        published
+    } = req.body;
+
+    const resultado = await pool.query(
+        `INSERT INTO posts
+            (author_id, title, content, published)
+         VALUES
+            ($1, $2, $3, $4)
+         RETURNING *`,
+        [author_id, title, content, published]
+    );
 
     res.status(201).json({
-        msg: "Autor agregado correctamente",
-        data: posteoNuevo
+        msg: "Posteo agregado correctamente",
+        data: resultado.rows[0]
     });
+
+} catch (error) {
+
+    console.error("Error al crear el post:", error);
+
+    res.status(500).json({
+        msg: "Error al crear el post"
+    });
+}
 
 };
 
-const putactualizarpost = (req, res) => {
-    const postctualizado = req.body;
+// PUT /posts/
+const putactualizarpost = async (req, res) => {
+
+try {
+
     const { id } = req.params;
-    const indice = baseDeDatos.posts.findIndex((post) => post.id === Number(id));
 
-    if (indice >= 0) {
-        baseDeDatos.posts[indice] = postctualizado;
+    const {
+        author_id,
+        title,
+        content,
+        published
+    } = req.body;
 
-    } else {
-        return res.status(204).send(`El posteo con id ${id} no fue encontrado.`);
+    const resultado = await pool.query(
+        `UPDATE posts
+         SET author_id = $1,
+             title = $2,
+             content = $3,
+             published = $4
+         WHERE id = $5
+         RETURNING *`,
+        [author_id, title, content, published, id]
+    );
+
+    if (resultado.rows.length === 0) {
+        return res.status(404).json({
+            msg: `El posteo con id ${id} no fue encontrado`
+        });
     }
 
-    res.status(201).json({
+    res.status(200).json({
         msg: "El posteo fue actualizado correctamente",
-        data: postctualizado
+        data: resultado.rows[0]
     });
+
+} catch (error) {
+
+    console.error("Error al actualizar el post:", error);
+
+    res.status(500).json({
+        msg: "Error al actualizar el post"
+    });
+}
 
 };
 
-const deletepost = (req, res) => {
+// DELETE /posts/
+const deletepost = async (req, res) => {
+
+try {
+
     const { id } = req.params;
-    const indice = baseDeDatos.posts.findIndex((post) => post.id === Number(id));
 
-    if (indice === -1) {
-        return res.status(204).send(`El poste con id ${id} no fue encontrado.`);
+    const resultado = await pool.query(
+        "DELETE FROM posts WHERE id = $1 RETURNING *",
+        [id]
+    );
 
-    } 
-    const posteoEliminado = baseDeDatos.posts.splice(indice, 1);
+    if (resultado.rows.length === 0) {
+        return res.status(404).json({
+            msg: `El posteo con id ${id} no fue encontrado`
+        });
+    }
 
-    res.status(201).json({
-        msg: "poste eliminado correctamente",
-        data: posteoEliminado
+    res.status(200).json({
+        msg: "Posteo eliminado correctamente",
+        data: resultado.rows[0]
     });
+
+} catch (error) {
+
+    console.error("Error al eliminar el post:", error);
+
+    res.status(500).json({
+        msg: "Error al eliminar el post"
+    });
+}
 
 };
 
 module.exports = {
-    getPostController,
-    getByIspostsController,
-    getPostsByAuthorController,
-    posPosteo,
-    putactualizarpost,
-    deletepost
-    
-}
+getPostController,
+getByIspostsController,
+getPostsByAuthorController,
+posPosteo,
+putactualizarpost,
+deletepost
+};

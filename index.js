@@ -1,3 +1,5 @@
+//index.js
+
 const { pool } = require("./src/config/dbConnect");
 const { app } = require("./src/server");
 
