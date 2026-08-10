@@ -2,7 +2,7 @@
 
 ## 📚 Documentación de la API
 
-👉 [Swagger / OpenAPI - Documentación de la API](https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/api-docs/)
+👉 [Swagger / OpenAPI - Documentación de la API](https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/api-docs)
 
 ---
 
