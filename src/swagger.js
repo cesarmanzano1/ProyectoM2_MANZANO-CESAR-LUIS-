@@ -10,19 +10,20 @@ const options = {
       version: "1.0.0",
       description: "Documentación Swagger para la API que gestiona autores y publicaciones."
     },
-  servers: [
- 
-    {
+    servers: [
+      {
+        url: "/",
+        description: "Servidor actual (dinámico)"
+      },
+      {
         url: "https://proyectom2manzano-cesar-luis-production.up.railway.app",
-        description: "Servidor Railway producción",
-    },
-    {
+        description: "Servidor Railway producción"
+      },
+      {
         url: "http://localhost:3000",
-        description: "Servidor local",
-    }
-],   
-
-
+        description: "Servidor local"
+      }
+    ]
   },
   apis: ["./src/**/*.js"]
 };

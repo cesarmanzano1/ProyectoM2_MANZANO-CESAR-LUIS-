@@ -14,8 +14,11 @@ const configPool = {
 }
 
 const configPoolRailWay = {
-    connectionString: DATABASE_URL
-}
+    connectionString: DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false // Requerido para conexiones externas/producción en Railway
+    }
+};
 
 const pool = new Pool( !DATABASE_URL ? configPool : configPoolRailWay )
 
