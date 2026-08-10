@@ -1,12 +1,9 @@
-// ..src/config/initDB.js
-
 const { pool } = require("./dbConnect");
 
 const initializeDatabase = async () => {
 
-    // =========================
-    // TABLA AUTHORS
-    // =========================
+    console.log("INICIANDO CREACION DE TABLAS...");
+
     await pool.query(`
         CREATE TABLE IF NOT EXISTS authors (
             id SERIAL PRIMARY KEY,
@@ -16,9 +13,8 @@ const initializeDatabase = async () => {
         )
     `);
 
-    // =========================
-    // TABLA POSTS
-    // =========================
+    console.log("TABLA AUTHORS OK");
+
     await pool.query(`
         CREATE TABLE IF NOT EXISTS posts (
             id SERIAL PRIMARY KEY,
@@ -31,9 +27,8 @@ const initializeDatabase = async () => {
         )
     `);
 
-    // =========================
-    // TABLA COMMENTS
-    // =========================
+    console.log("TABLA POSTS OK");
+
     await pool.query(`
         CREATE TABLE IF NOT EXISTS comments (
             id SERIAL PRIMARY KEY,
@@ -45,7 +40,9 @@ const initializeDatabase = async () => {
         )
     `);
 
-    console.log("Base de datos inicializada correctamente");
+    console.log("TABLA COMMENTS OK");
+
+    console.log("BASE DE DATOS INICIALIZADA CORRECTAMENTE");
 };
 
 module.exports = {
