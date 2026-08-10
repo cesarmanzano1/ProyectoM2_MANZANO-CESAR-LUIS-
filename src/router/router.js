@@ -202,7 +202,7 @@ router.get("/posts/author/:authorId",validarAuthorId, getPostsByAuthorController
  *         application/json:
  *           schema:
  *             type: object
- *             required: [author_id, title, content, published, created_at]
+ *             required: [author_id, title, content, published]
  *             properties:
  *               author_id:
  *                 type: integer
@@ -212,8 +212,7 @@ router.get("/posts/author/:authorId",validarAuthorId, getPostsByAuthorController
  *                 type: string
  *               published:
  *                 type: boolean
- *               created_at:
- *                 type: string
+ *               
  *     responses:
  *       201:
  *         description: Post creado correctamente
