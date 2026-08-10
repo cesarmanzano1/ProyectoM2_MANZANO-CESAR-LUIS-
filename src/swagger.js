@@ -13,12 +13,12 @@ const options = {
     servers: [
       {
         url: "/",
-        description: "Servidor actual (dinámico)"
+        description: "Proyectom2manzano-cesar-luis-production.up.railway.app"
       },
-      {
+    /*  {
         url: "https://proyectom2manzano-cesar-luis-production.up.railway.app",
         description: "Servidor Railway producción"
-      },
+      },*/
       {
         url: "http://localhost:3000",
         description: "Servidor local"
