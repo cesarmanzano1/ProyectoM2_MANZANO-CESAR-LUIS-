@@ -32,6 +32,37 @@ La aplicación se encuentra desplegada en **Railway**.
 - Railway
 - dotenv
 
+
+---
+
+## 🌐 Ejecución en servidor
+
+La API se encuentra desplegada en **Railway**, por lo que puede utilizarse directamente desde el servidor sin necesidad de realizar una configuración local.
+
+👉 [Swagger / OpenAPI - API desplegada](https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/api-docs)
+
+Desde Swagger se pueden consultar y probar los diferentes endpoints de la API.
+
+![Swagger](img/swagger.png)
+
+---
+
+## 💻 Ejecución local
+
+El proyecto también puede ejecutarse de forma local utilizando **Node.js, Express y PostgreSQL**.
+
+Para ejecutar la API localmente es necesario contar con:
+
+- Node.js instalado.
+- PostgreSQL instalado y ejecutándose.
+- Una base de datos PostgreSQL local.
+- Las dependencias del proyecto instaladas.
+
+### 1. Clonar el proyecto
+
+```bash
+git clone https://github.com/cesarmanzano1/PROYECTOM2_MANZANO-CESAR-LUIS.git
+cd PROYECTOM2_MANZANO-CESAR-LUIS
 ---
 
 ## 📂 Entidades
@@ -124,7 +155,7 @@ Se validan los siguientes campos:
 - `email`
 - `bio`
 
-También se verifica que el correo electrónico tenga un formato válido.
+También se verifica que el correo electrónico tenga un formato válido y unico.
 
 ### Posts
 
