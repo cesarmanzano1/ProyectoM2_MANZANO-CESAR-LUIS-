@@ -49,6 +49,8 @@ const router = Router();
  * /health:
  *   get:
  *     summary: Verificar estado del servicio
+ *     tags:
+ *      - Health
  *     responses:
  *       200:
  *         description: Servicio operativo
@@ -60,7 +62,7 @@ router.get('/health', healthController);
  * /authors:
  *   get:
  *     summary: Obtener todos los autores
- *  tags:
+ *     tags:
  *       - Authors
  *     responses:
  *       200:
@@ -73,7 +75,7 @@ router.get('/authors', getlibrosController);
  * /authors/{id}:
  *   get:
  *     summary: Obtener un autor por ID
- *  tags:
+ *     tags:
  *       - Authors
  *     parameters:
  *       - in: path
@@ -94,7 +96,7 @@ router.get('/authors/:id', validarId, getUserByIdlibrosController);
  * /authors:
  *   post:
  *     summary: Crear un nuevo autor
- *  tags:
+ *     tags:
  *       - Authors
  *     requestBody:
  *       required: true
@@ -121,7 +123,7 @@ router.post('/authors', validateAuthorsData, postaddauthor);
  * /authors/{id}:
  *   put:
  *     summary: Actualizar un autor
- *  tags:
+ *     tags:
  *       - Authors
  *     parameters:
  *       - in: path
@@ -165,7 +167,7 @@ router.put('/authors/:id', validarId, putactualizarauthor);
  * /authors/{id}:
  *   delete:
  *     summary: Eliminar un autor
- *  tags:
+ *     tags:
  *       - Authors
  *     parameters:
  *       - in: path
@@ -186,7 +188,7 @@ router.delete('/authors/:id', validarId, deleteauthor);
  * /posts:
  *   get:
  *     summary: Obtener todos los posts
- *   tags:
+ *     tags:
  *       - Posts
  *     responses:
  *       200:
@@ -199,7 +201,7 @@ router.get('/posts', getPostController);
  * /posts/{id}:
  *   get:
  *     summary: Obtener un post por ID
- *   tags:
+ *     tags:
  *       - Posts
  *     parameters:
  *       - in: path
@@ -218,7 +220,7 @@ router.get('/posts/:id', validarId, getByIspostsController);
  * /posts/author/{authorId}:
  *   get:
  *     summary: Obtener posts por autor
- *    tags:
+ *     tags:
  *       - Posts
  *     parameters:
  *       - in: path
@@ -237,7 +239,7 @@ router.get("/posts/author/:authorId", validarAuthorId, getPostsByAuthorControlle
  * /posts:
  *   post:
  *     summary: Crear un nuevo post
-  *   tags:
+ *     tags:
  *       - Posts
  *     requestBody:
  *       required: true
@@ -315,6 +317,8 @@ router.put('/posts/:id', validarId, putactualizarpost);
  * /posts/{id}:
  *   delete:
  *     summary: Eliminar un post
+ *     tags:
+ *      - Posts
  *     parameters:
  *       - in: path
  *         name: id
