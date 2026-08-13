@@ -82,12 +82,16 @@ const postaddauthor = async (req, res) => {
 
     } catch (error) {
 
-        console.error("ERROR COMPLETO AL CREAR AUTOR:");
-        console.error(error);
+        console.error("Error al crear el autor:", error);
+
+        if (error.code === "23505") {
+            return res.status(400).json({
+                msg: "El correo electrónico ya está registrado"
+            });
+        }
 
         res.status(500).json({
-            msg: "Error al crear el autor",
-            error: error.message
+            msg: "Error al crear el autor"
         });
     }
 
@@ -124,7 +128,13 @@ const putactualizarauthor = async (req, res) => {
 
     } catch (error) {
 
-        console.error("Error al actualizar autor:", error);
+        console.error("Error al actualizar el autor:", error);
+
+        if (error.code === "23505") {
+            return res.status(400).json({
+                msg: "El correo electrónico ya está registrado"
+            });
+        }
 
         res.status(500).json({
             msg: "Error al actualizar el autor"
