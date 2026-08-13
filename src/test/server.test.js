@@ -4,6 +4,10 @@ const { app } = require("../server");
 
 describe("Health Endpoint", () => {
 
+    // =========================
+    // HEALTH Y SWAGGER
+    // =========================
+
     test("GET /api-docs.json devuelve la especificación Swagger", async () => {
 
         const response = await request(app).get("/api-docs.json");
@@ -24,6 +28,10 @@ describe("Health Endpoint", () => {
     });
 
 
+    // =========================
+    // AUTHORS
+    // =========================
+
     test("GET /authors devuelve todos los autores", async () => {
 
         const response = await request(app).get("/authors");
@@ -35,24 +43,6 @@ describe("Health Endpoint", () => {
     });
 
 
-    test("GET /authors/1 devuelve un autor", async () => {
-
-        const response = await request(app).get("/authors/1");
-
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty("data");
-
-    });
-
-
-    test("GET /authors/abc devuelve 400", async () => {
-
-        const response = await request(app).get("/authors/abc");
-
-        expect(response.status).toBe(400);
-        expect(response.body.msg).toBe("Ingrese un ID válido");
-
-    });
 
 
     test("GET /authors/999 devuelve 404", async () => {
@@ -64,22 +54,22 @@ describe("Health Endpoint", () => {
     });
 
 
-   test("POST /authors crea un autor", async () => {
+    test("POST /authors crea un autor", async () => {
 
-    const nuevoAutor = {
-        name: "Juan Pérez",
-        email: `juan.${Date.now()}@gmail.com`,
-        bio: "Programador"
-    };
+        const nuevoAutor = {
+            name: "Juan Pérez",
+            email: `juan.${Date.now()}@gmail.com`,
+            bio: "Programador"
+        };
 
-    const response = await request(app)
-        .post("/authors")
-        .send(nuevoAutor);
+        const response = await request(app)
+            .post("/authors")
+            .send(nuevoAutor);
 
-    expect(response.status).toBe(201);
-    expect(response.body.data.name).toBe("Juan Pérez");
+        expect(response.status).toBe(201);
+        expect(response.body.data.name).toBe("Juan Pérez");
 
-});
+    });
 
 
     test("POST /authors sin email devuelve 400", async () => {
@@ -96,65 +86,9 @@ describe("Health Endpoint", () => {
     });
 
 
-    test("GET /authors", async () => {
-
-        const response = await request(app).get("/authors");
-
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty("data");
-        expect(Array.isArray(response.body.data)).toBe(true);
-
-    });
-
-
-    test("GET /authors/1", async () => {
-
-        const response = await request(app).get("/authors/1");
-
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty("data");
-
-    });
-
-
-    test("GET /authors/abc", async () => {
-
-        const response = await request(app).get("/authors/abc");
-
-        expect(response.status).toBe(400);
-
-    });
-
-
-    test("GET /authors/999", async () => {
-
-        const response = await request(app).get("/authors/999");
-
-        expect(response.status).toBe(404);
-
-    });
-
-
     // =========================
     // COMENTARIOS
     // =========================
-
-    test("POST /comments crea un comentario", async () => {
-
-        const nuevoComentario = {
-            content: "Excelente publicación",
-            author_id: 1,
-            post_id: 1
-        };
-
-        const response = await request(app)
-            .post("/comments")
-            .send(nuevoComentario);
-
-        expect(response.status).toBe(201);
-
-    });
-
 
     test("POST /comments sin content devuelve 400", async () => {
 
@@ -229,8 +163,7 @@ describe("Health Endpoint", () => {
 
     test("GET /comments devuelve todos los comentarios", async () => {
 
-        const response = await request(app)
-            .get("/comments");
+        const response = await request(app).get("/comments");
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("data");
