@@ -170,11 +170,17 @@ const deleteauthor = async (req, res) => {
 
         console.error("Error al eliminar autor:", error);
 
+        // Autor tiene posts o comentarios relacionados
+        if (error.code === "23503") {
+            return res.status(409).json({
+                msg: "No se puede eliminar el autor porque tiene registros asociados"
+            });
+        }
+
         res.status(500).json({
             msg: "Error al eliminar el autor"
         });
     }
-
 };
 
 module.exports = {
