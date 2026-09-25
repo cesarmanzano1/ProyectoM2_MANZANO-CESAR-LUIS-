@@ -85,6 +85,20 @@ describe("Health Endpoint", () => {
         expect(response.status).toBe(400);
 
     });
+    test("POST /authors con email inválido devuelve 400", async () => {
+
+        const response = await request(app)
+            .post("/authors")
+            .send({
+                name: "Juan",
+                email: "email-invalido",
+                bio: "Programador"
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body.msg).toBe("El correo electrónico no es válido");
+
+    });
     test("POST /authors con email repetido devuelve 400", async () => {
 
         const email = `repetido.${Date.now()}@gmail.com`;
@@ -117,10 +131,162 @@ describe("Health Endpoint", () => {
         );
 
     });
+    test("PUT /authors/:id actualiza un autor", async () => {
 
+        // Creamos un autor para asegurarnos de tener un ID válido
+        const autor = await request(app)
+            .post("/authors")
+            .send({
+                name: "Autor Original",
+                email: `autor.put.${Date.now()}@gmail.com`,
+                bio: "Bio original"
+            });
+
+        expect(autor.status).toBe(201);
+
+        const authorId = autor.body.data.id;
+
+        const response = await request(app)
+            .put(`/authors/${authorId}`)
+            .send({
+                name: "Autor Actualizado",
+                email: `autor.actualizado.${Date.now()}@gmail.com`,
+                bio: "Bio actualizada"
+            });
+
+        expect(response.status).toBe(200);
+        expect(response.body.data.id).toBe(authorId);
+        expect(response.body.data.name).toBe("Autor Actualizado");
+        expect(response.body.data.bio).toBe("Bio actualizada");
+    });
+    test("PUT /authors/:id con email inválido devuelve 400", async () => {
+
+        const autor = await request(app)
+            .post("/authors")
+            .send({
+                name: "Autor Email",
+                email: `autor.email.${Date.now()}@gmail.com`,
+                bio: "Bio"
+            });
+
+        expect(autor.status).toBe(201);
+
+        const authorId = autor.body.data.id;
+
+        const response = await request(app)
+            .put(`/authors/${authorId}`)
+            .send({
+                name: "Autor Modificado",
+                email: "email-invalido",
+                bio: "Bio modificada"
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body.msg).toBe("El correo electrónico no es válido");
+    });
+    test("PUT /authors/abc devuelve 400", async () => {
+
+        const response = await request(app)
+            .put("/authors/abc")
+            .send({
+                name: "Autor",
+                email: "autor@gmail.com",
+                bio: "Bio"
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body.msg).toBe("Ingrese un ID válido");
+    });
+    test("PUT /authors/999 devuelve 404", async () => {
+
+        const response = await request(app)
+            .put("/authors/999")
+            .send({
+                name: "Autor",
+                email: "autor999@gmail.com",
+                bio: "Bio"
+            });
+
+        expect(response.status).toBe(404);
+    });
+    test("DELETE /authors/:id elimina un autor", async () => {
+
+        const autor = await request(app)
+            .post("/authors")
+            .send({
+                name: "Autor para eliminar",
+                email: `autor.delete.${Date.now()}@gmail.com`,
+                bio: "Autor de prueba"
+            });
+
+        expect(autor.status).toBe(201);
+
+        const authorId = autor.body.data.id;
+
+        const response = await request(app)
+            .delete(`/authors/${authorId}`);
+
+        expect([200, 204]).toContain(response.status);
+    });
+    test("DELETE /authors/999 devuelve 404", async () => {
+
+        const response = await request(app)
+            .delete("/authors/999");
+
+        expect(response.status).toBe(404);
+    });
+    test("DELETE /authors/abc devuelve 400", async () => {
+
+        const response = await request(app)
+            .delete("/authors/abc");
+
+        expect(response.status).toBe(400);
+        expect(response.body.msg).toBe("Ingrese un ID válido");
+    });
     // POSTS
     // =========================
+    test("PUT /posts/:id actualiza un post", async () => {
 
+        const autor = await request(app)
+            .post("/authors")
+            .send({
+                name: "Autor para actualizar post",
+                email: `autor.post.put.${Date.now()}@gmail.com`,
+                bio: "Autor de prueba"
+            });
+
+        expect(autor.status).toBe(201);
+
+        const authorId = autor.body.data.id;
+
+        const post = await request(app)
+            .post("/posts")
+            .send({
+                author_id: authorId,
+                title: "Post original",
+                content: "Contenido original",
+                published: false
+            });
+
+        expect(post.status).toBe(201);
+
+        const postId = post.body.data.id;
+
+        const response = await request(app)
+            .put(`/posts/${postId}`)
+            .send({
+                author_id: authorId,
+                title: "Post actualizado",
+                content: "Contenido actualizado",
+                published: true
+            });
+
+        expect(response.status).toBe(200);
+        expect(response.body.data.id).toBe(postId);
+        expect(response.body.data.title).toBe("Post actualizado");
+        expect(response.body.data.content).toBe("Contenido actualizado");
+        expect(response.body.data.published).toBe(true);
+    });
     test("GET /posts devuelve todos los posts", async () => {
 
         const response = await request(app).get("/posts");
@@ -293,7 +459,38 @@ describe("Health Endpoint", () => {
 
     });
 
+    test("DELETE /posts/:id elimina un post", async () => {
 
+        const autor = await request(app)
+            .post("/authors")
+            .send({
+                name: "Autor para eliminar post",
+                email: `autor.post.delete.${Date.now()}@gmail.com`,
+                bio: "Autor de prueba"
+            });
+
+        expect(autor.status).toBe(201);
+
+        const authorId = autor.body.data.id;
+
+        const post = await request(app)
+            .post("/posts")
+            .send({
+                author_id: authorId,
+                title: "Post para eliminar",
+                content: "Contenido de prueba",
+                published: true
+            });
+
+        expect(post.status).toBe(201);
+
+        const postId = post.body.data.id;
+
+        const response = await request(app)
+            .delete(`/posts/${postId}`);
+
+        expect([200, 204]).toContain(response.status);
+    });
     test("DELETE /posts/999 devuelve 404", async () => {
 
         const response = await request(app)
@@ -304,7 +501,7 @@ describe("Health Endpoint", () => {
     });
 
 
-    /*test("DELETE /posts/abc devuelve 400", async () => {
+    test("DELETE /posts/abc devuelve 400", async () => {
 
         const response = await request(app)
             .delete("/posts/abc");
@@ -312,5 +509,5 @@ describe("Health Endpoint", () => {
         expect(response.status).toBe(400);
         expect(response.body.msg).toBe("Ingrese un ID válido");
 
-    });*/
+    });
 });

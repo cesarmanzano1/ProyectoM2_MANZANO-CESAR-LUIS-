@@ -152,7 +152,8 @@ router.post('/authors', validateAuthorsData, postaddauthor);
  *       500:
  *         description: Error al actualizar el autor
  */
-router.put('/authors/:id', validarId, putactualizarauthor);
+router.put('/authors/:id', validarId, validateAuthorsData, putactualizarauthor);
+
 
 /**
  * @openapi
@@ -167,12 +168,18 @@ router.put('/authors/:id', validarId, putactualizarauthor);
  *         required: true
  *         schema:
  *           type: integer
+ *         description: ID del autor
  *     responses:
- *       201:
+ *       200:
  *         description: Autor eliminado correctamente
+ *       404:
+ *         description: Autor no encontrado
+ *       400:
+ *         description: ID inválido
+ *       500:
+ *         description: Error al eliminar el autor
  */
 router.delete('/authors/:id', validarId, deleteauthor);
-
 
 /******  POSTEOS ******************/
 /**
@@ -303,6 +310,35 @@ router.post("/posts", validateposteoData, posPosteo);
  *         description: Error al actualizar el post
  */
 router.put('/posts/:id', validarId, putactualizarpost);
+router.put('/posts/:id', validarId, putactualizarpost);
+
+
+/**
+ * @openapi
+ * /posts/{id}:
+ *   delete:
+ *     summary: Eliminar un post
+ *     tags:
+ *       - Posts
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del post
+ *     responses:
+ *       200:
+ *         description: Post eliminado correctamente
+ *       404:
+ *         description: Post no encontrado
+ *       400:
+ *         description: ID inválido
+ *       500:
+ *         description: Error al eliminar el post
+ */
+router.delete('/posts/:id', validarId, deletepost);
+
 
 
 
