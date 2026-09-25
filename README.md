@@ -183,13 +183,7 @@ La entidad `posts` representa las publicaciones realizadas por los autores.
 
 ---
 
-## 💬 Comments
 
-La entidad `comments` representa los comentarios realizados sobre las publicaciones.
-
-![Entidad Comments](img/comentarios.png)
-
----
 
 # 🔗 Relaciones
 
@@ -197,9 +191,7 @@ Las entidades de la API se encuentran relacionadas de la siguiente manera:
 
 - Un autor puede tener muchos posts.
 - Un post pertenece a un autor.
-- Un autor puede realizar muchos comentarios.
-- Un comentario pertenece a un autor.
-- Un comentario pertenece a un post.
+
 
 ![Relaciones de Entidades](img/relacion_entidades.png)
 
@@ -213,7 +205,6 @@ Las principales tablas utilizadas son:
 
 - `authors`
 - `posts`
-- `comments`
 
 ---
 
@@ -252,14 +243,6 @@ Las principales tablas utilizadas son:
 
 ---
 
-## 💬 Comments
-
-| Método | Endpoint | Descripción |
-|---|---|---|
-| GET | `/comments` | Obtener todos los comentarios |
-| POST | `/comments` | Crear un nuevo comentario |
-
----
 
 # ✅ Validaciones
 
@@ -290,22 +273,6 @@ Se validan los siguientes campos:
 - `published`
 
 El campo `published` debe ser de tipo booleano.
-
----
-
-## 💬 Comments
-
-Se validan los siguientes campos:
-
-- `content`
-- `author_id`
-- `post_id`
-
-También se verifica que:
-
-- `author_id` sea un número entero positivo.
-- `post_id` sea un número entero positivo.
-- El contenido del comentario no esté vacío.
 
 ---
 
@@ -364,7 +331,6 @@ PROYECTOM2_MANZANO-CESAR-LUIS/
 │   │
 │   ├── controllers/
 │   │   ├── authors.Controller.js
-│   │   ├── comments.controller.js
 │   │   ├── health.controller.js
 │   │   └── post.controller.js
 │   │
