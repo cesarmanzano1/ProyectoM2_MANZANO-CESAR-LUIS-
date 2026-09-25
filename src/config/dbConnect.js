@@ -11,6 +11,7 @@ const configPool = {
     max: DB_max,
     idleTimeoutMillis: DB_idleTimeoutMillis,
     connectionTimeoutMillis: DB_connectionTimeoutMillis
+
 }
 
 const configPoolRailWay = {

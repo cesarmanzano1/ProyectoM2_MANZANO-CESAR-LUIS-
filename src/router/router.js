@@ -17,13 +17,6 @@ const { posPosteo } = require("../controllers/post.Controller");
 const { putactualizarpost } = require("../controllers/post.Controller");
 const { deletepost } = require("../controllers/post.Controller");
 
-/*****COMENTARIOS**************** */
-const { createComment } = require("../controllers/comments.controller");
-const { getComments } = require("../controllers/comments.controller");
-
-
-
-
 
 /** MIDDLEWARE */
 
@@ -31,7 +24,6 @@ const { validateAuthorsData } = require("../middleware/middleware");
 const { validateposteoData } = require("../middleware/middleware");
 const { validarId } = require("../middleware/middleware");
 const { validarAuthorId } = require("../middleware/middleware");
-const { validateCommentData } = require("../middleware/middleware");
 
 
 
@@ -312,79 +304,8 @@ router.post("/posts", validateposteoData, posPosteo);
  */
 router.put('/posts/:id', validarId, putactualizarpost);
 
-/**
- * @openapi
- * /posts/{id}:
- *   delete:
- *     summary: Eliminar un post
- *     tags:
- *      - Posts
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       201:
- *         description: Post eliminado correctamente
- */
-router.delete('/posts/:id', validarId, deletepost);
 
 
-/**
- * @openapi
- * /comments:
- *   post:
- *     summary: Crear un nuevo comentario
- *     tags:
- *       - Comments
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - author_id
- *               - post_id
- *               - content
- *             properties:
- *               author_id:
- *                 type: integer
- *                 description: ID del autor que realiza el comentario
- *                 example: 1
- *               post_id:
- *                 type: integer
- *                 description: ID del post comentado
- *                 example: 1
- *               content:
- *                 type: string
- *                 description: Contenido del comentario
- *                 example: Excelente publicación
- *     responses:
- *       201:
- *         description: Comentario creado correctamente
- *       400:
- *         description: Datos del comentario inválidos
- */
-router.post("/comments", validateCommentData, createComment);
-
-
-/**
- * @openapi
- * /comments:
- *   get:
- *     summary: Obtener todos los comentarios
- *     tags:
- *       - Comments
- *     responses:
- *       200:
- *         description: Lista de comentarios
- *       404:
- *         description: No se encontraron comentarios
- */
-router.get("/comments", getComments);
 module.exports = {
   router
 }

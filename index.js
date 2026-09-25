@@ -29,3 +29,5 @@ const startServer = async () => {
 };
 
 startServer();
+
+//package.json .. server.test.js .. initDB.test.js 

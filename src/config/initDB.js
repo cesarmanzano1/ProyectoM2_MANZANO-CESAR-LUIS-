@@ -10,7 +10,7 @@ const initializeDatabase = async () => {
         CREATE TABLE IF NOT EXISTS authors (
             id SERIAL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
-            email VARCHAR(150) NOT NULL,
+            email VARCHAR(150) NOT NULL UNIQUE,
             bio TEXT NOT NULL
         )
     `);
@@ -31,18 +31,7 @@ const initializeDatabase = async () => {
 
     console.log("TABLA POSTS OK");
 
-    await pool.query(`
-        CREATE TABLE IF NOT EXISTS comments (
-            id SERIAL PRIMARY KEY,
-            content TEXT NOT NULL,
-            author_id INTEGER NOT NULL,
-            post_id INTEGER NOT NULL,
-            FOREIGN KEY (author_id) REFERENCES authors(id),
-            FOREIGN KEY (post_id) REFERENCES posts(id)
-        )
-    `);
 
-    console.log("TABLA COMMENTS OK");
 
     console.log("BASE DE DATOS INICIALIZADA CORRECTAMENTE");
 };

@@ -98,63 +98,10 @@ next();
 
 };
 
-const validateCommentData = (req, res, next) => {
-
-    const {
-        content,
-        author_id,
-        post_id
-    } = req.body;
-
-    const camposFaltantes = [];
-
-    // Verificar campos obligatorios
-    if (!content) camposFaltantes.push("content");
-    if (!author_id) camposFaltantes.push("author_id");
-    if (!post_id) camposFaltantes.push("post_id");
-
-    // Verificar campos faltantes
-    if (camposFaltantes.length > 0) {
-        return res.status(400).json({
-            msg: "No se pudo crear el comentario, falta información",
-            data: `Campos faltantes: ${camposFaltantes.join(", ")}`
-        });
-    }
-
-    // Verificar que content sea texto y no solo espacios
-    if (typeof content !== "string" || content.trim() === "") {
-        return res.status(400).json({
-            msg: "El contenido del comentario no puede estar vacío"
-        });
-    }
-
-    // Verificar author_id
-    if (
-        !Number.isInteger(Number(author_id)) ||
-        Number(author_id) <= 0
-    ) {
-        return res.status(400).json({
-            msg: "El author_id debe ser un número entero positivo"
-        });
-    }
-
-    // Verificar post_id
-    if (
-        !Number.isInteger(Number(post_id)) ||
-        Number(post_id) <= 0
-    ) {
-        return res.status(400).json({
-            msg: "El post_id debe ser un número entero positivo"
-        });
-    }
-
-    next();
-};
 module.exports = {
 requestLogger,
 validateAuthorsData,
 validateposteoData,
 validarId,
 validarAuthorId,
-validateCommentData
 };
