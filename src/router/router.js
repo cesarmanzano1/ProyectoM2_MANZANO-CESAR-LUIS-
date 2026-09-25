@@ -137,13 +137,13 @@ router.post('/authors', validateAuthorsData, postaddauthor);
  *             properties:
  *               name:
  *                 type: string
- *                 example: Gabriel García Márquez
+ *                 example: cesar luis manzano
  *               email:
  *                 type: string
- *                 example: gabriel@example.com
+ *                 example: cesar@example.com
  *               bio:
  *                 type: string
- *                 example: Escritor colombiano actualizado
+ *                 example: Escritor argentino actualizado
  *     responses:
  *       200:
  *         description: Autor actualizado correctamente
