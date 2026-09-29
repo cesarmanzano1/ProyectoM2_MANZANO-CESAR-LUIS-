@@ -271,19 +271,24 @@ router.get("/posts/author/:authorId", validarAuthorId, getPostsByAuthorControlle
  *         application/json:
  *           schema:
  *             type: object
- *             required: [author_id, title, content, published]
+ *             required:
+ *               - author_id
+ *               - title
+ *               - content
+ *               - published
  *             properties:
  *               author_id:
  *                 type: integer
- *                example: "1 " 
+ *                 example: 1
  *               title:
  *                 type: string
+ *                 example: Mi primer post
  *               content:
  *                 type: string
+ *                 example: Este es el contenido de mi primer post
  *               published:
  *                 type: boolean
- *                 example: true 
- *               
+ *                 example: true
  *     responses:
  *       201:
  *         description: Post creado correctamente
@@ -345,6 +350,8 @@ router.post("/posts", validateposteoData, posPosteo);
  *         description: Error al actualizar el post
  */
 router.put('/posts/:id', validarId,validateposteoData, putactualizarpost);
+//router.put('/posts/:id', validarId, putactualizarpost);
+//router.put('/posts/:id', validarId, putactualizarpost);
 //router.put('/posts/:id', validarId, putactualizarpost);
 
 
