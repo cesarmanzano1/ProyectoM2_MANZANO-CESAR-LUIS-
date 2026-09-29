@@ -97,16 +97,23 @@ router.get('/authors/:id', validarId, getUserByIdlibrosController);
  *           schema:
  *             type: object
  *             required: [name, email, bio]
- *             properties:
+ *             properties:s
  *               name:
  *                 type: string
  *               email:
- *                 type: string
+ *                 type: string@correo.com
  *               bio:
  *                 type: string
  *     responses:
- *       201:
+ *       200:
  *         description: Autor creado correctamente
+ *       400:
+ *         description: ID inválido
+ *       404:
+ *         description: Autor no encontrado
+ *       500:
+ *         description: Error al obtener el autor
+ * 
  */
 router.post('/authors', validateAuthorsData, postaddauthor);
 
@@ -147,8 +154,10 @@ router.post('/authors', validateAuthorsData, postaddauthor);
  *     responses:
  *       200:
  *         description: Autor actualizado correctamente
+ *       400:
+ *         description: No se pudo crear el autor, falta información
  *       404:
- *         description: Autor no encontrado
+ *         description: El correo electrónico no es válido
  *       500:
  *         description: Error al actualizar el autor
  */
@@ -209,8 +218,14 @@ router.get('/posts', getPostController);
  *         schema:
  *           type: integer
  *     responses:
- *       200:
- *         description: Post encontrado
+ *        200:
+    description: Posts del autor
+  400:
+    description: ID del autor inválido
+  404:
+    description: Autor no encontrado o no tiene posts
+  500:
+    description: Error al obtener los posts
  */
 router.get('/posts/:id', validarId, getByIspostsController);
 
@@ -230,6 +245,12 @@ router.get('/posts/:id', validarId, getByIspostsController);
  *     responses:
  *       200:
  *         description: Posts del autor
+ *       400:
+ *         description: ID del autor inválido
+ *       404:
+ *         description: Autor no encontrado o no tiene posts
+ *       500:
+ *         description: Error al obtener los posts
  */
 router.get("/posts/author/:authorId", validarAuthorId, getPostsByAuthorController);
 
@@ -260,6 +281,12 @@ router.get("/posts/author/:authorId", validarAuthorId, getPostsByAuthorControlle
  *     responses:
  *       201:
  *         description: Post creado correctamente
+ *       400:
+ *         description: Datos inválidos o campos obligatorios faltantes
+ *       404:
+ *         description: Autor no encontrado
+ *       500:
+ *         description: Error al crear el post
  */
 router.post("/posts", validateposteoData, posPosteo);
 
@@ -304,13 +331,15 @@ router.post("/posts", validateposteoData, posPosteo);
  *     responses:
  *       200:
  *         description: Post actualizado correctamente
+ *       400:
+ *         description: ID inválido o datos incorrectos
  *       404:
  *         description: Post no encontrado
  *       500:
  *         description: Error al actualizar el post
  */
 router.put('/posts/:id', validarId, putactualizarpost);
-router.put('/posts/:id', validarId, putactualizarpost);
+//router.put('/posts/:id', validarId, putactualizarpost);
 
 
 /**
