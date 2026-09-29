@@ -275,12 +275,14 @@ router.get("/posts/author/:authorId", validarAuthorId, getPostsByAuthorControlle
  *             properties:
  *               author_id:
  *                 type: integer
+ *                example: "1 " 
  *               title:
  *                 type: string
  *               content:
  *                 type: string
  *               published:
  *                 type: boolean
+ *                 example: true 
  *               
  *     responses:
  *       201:
@@ -322,7 +324,7 @@ router.post("/posts", validateposteoData, posPosteo);
  *             properties:
  *               author_id:
  *                 type: integer
- *                 example: 1
+ *                 example: "1"
  *               title:
  *                 type: string
  *                 example: Cien años de soledad
@@ -342,7 +344,7 @@ router.post("/posts", validateposteoData, posPosteo);
  *       500:
  *         description: Error al actualizar el post
  */
-router.put('/posts/:id', validarId, putactualizarpost);
+router.put('/posts/:id', validarId,validateposteoData, putactualizarpost);
 //router.put('/posts/:id', validarId, putactualizarpost);
 
 
