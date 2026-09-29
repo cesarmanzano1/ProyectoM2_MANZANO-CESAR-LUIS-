@@ -96,24 +96,28 @@ router.get('/authors/:id', validarId, getUserByIdlibrosController);
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, email, bio]
- *             properties:s
+ *             required:
+ *               - name
+ *               - email
+ *               - bio
+ *             properties:
  *               name:
  *                 type: string
+ *                 example: Cesar Luis Manzano
  *               email:
- *                 type: string@correo.com
+ *                 type: string
+ *                 format: email
+ *                 example: cesar@example.com
  *               bio:
  *                 type: string
+ *                 example: Escritor argentino
  *     responses:
- *       200:
+ *       201:
  *         description: Autor creado correctamente
  *       400:
- *         description: ID inválido
- *       404:
- *         description: Autor no encontrado
+ *         description: Datos inválidos o campos obligatorios faltantes
  *       500:
- *         description: Error al obtener el autor
- * 
+ *         description: Error al crear el autor
  */
 router.post('/authors', validateAuthorsData, postaddauthor);
 
