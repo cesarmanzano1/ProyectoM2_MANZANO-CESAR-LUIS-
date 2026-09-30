@@ -109,7 +109,7 @@ describe("Health Endpoint", () => {
             bio: "Primer autor"
         };
 
-        // Primero creamos el autor
+        // Primero creamos el autorf
         const primerAutor = await request(app)
             .post("/authors")
             .send(nuevoAutor);
@@ -338,8 +338,7 @@ describe("Health Endpoint", () => {
 
     test("POST /posts crea un post", async () => {
 
-        // Primero creamos un autor para asegurarnos
-        // de que exista una clave foránea válida
+    
         const autor = await request(app)
             .post("/authors")
             .send({
@@ -352,7 +351,6 @@ describe("Health Endpoint", () => {
 
         const authorId = autor.body.data.id;
 
-        // Ahora creamos el post utilizando el ID real del autor
         const nuevoPost = {
             author_id: authorId,
             title: "Post de prueba",
@@ -416,12 +414,12 @@ describe("Health Endpoint", () => {
                 author_id: 1,
                 title: "Post de prueba",
                 content: "Contenido de prueba",
-                published: "true"
-            });
+                published: "invalid"
+             });
 
         expect(response.status).toBe(400);
         expect(response.body.msg).toBe(
-            "No se pudo crear el posteo, falta información"
+            "El campo published debe ser true o false"
         );
 
     });

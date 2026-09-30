@@ -1,218 +1,118 @@
-// src/controllers/post.controller.js
-
-const { pool } = require("../config/dbConnect");
+const postService = require("../services/post.service");
+const authorsService = require("../services/authors.service");
 
 // GET /posts
 const getPostController = async (req, res) => {
-
-    try {
-
-        const resultado = await pool.query(
-            "SELECT * FROM posts ORDER BY id"
-        );
-
+      try {
+        const posts = await postService.getAllPosts();
         res.status(200).json({
             msg: "Posteos encontrados",
-            data: resultado.rows
+            data: posts
         });
-
-    } catch (error) {
-
+      } catch (error) {
         console.error("Error al obtener los posts:", error);
+        res.status(500).json({ msg: "Error al obtener los posts" });
+    }};
 
-        res.status(500).json({
-            msg: "Error al obtener los posts"
-        });
-    }
-
-};
-
-// GET /posts/
+// GET /posts/:id
 const getByIspostsController = async (req, res) => {
-
-    try {
-
+try {
         const { id } = req.params;
+        const post = await postService.getPostById(id);
 
-        const resultado = await pool.query(
-            "SELECT * FROM posts WHERE id = $1",
-            [id]
-        );
-
-        if (resultado.rows.length === 0) {
-            return res.status(404).json({
-                msg: "Posteo no encontrado"
-            });
+        if (!post) {
+            return res.status(404).json({ msg: "Posteo no encontrado" });
         }
 
         res.status(200).json({
             msg: "Posteo encontrado",
-            data: resultado.rows[0]
+            data: post
         });
-
-    } catch (error) {
-
+     } catch (error) {
         console.error("Error al obtener el post:", error);
+        res.status(500).json({ msg: "Error al obtener el post" });
+     }};
 
-        res.status(500).json({
-            msg: "Error al obtener el post"
-        });
-    }
-
-};
-
-// GET /posts/author/
+// GET /posts/author/:authorId
 const getPostsByAuthorController = async (req, res) => {
-
-    try {
-
+       try {
         const { authorId } = req.params;
 
-        // Primero verificamos que exista el autor
-        const autor = await pool.query(
-            "SELECT * FROM authors WHERE id = $1",
-            [authorId]
-        );
-
-        if (autor.rows.length === 0) {
-            return res.status(404).json({
-                msg: "Autor no encontrado"
-            });
+        // Verificar que el autor existe antes de buscar sus posts
+        const autor = await authorsService.getAuthorById(authorId);
+        if (!autor) {
+            return res.status(404).json({ msg: "Autor no encontrado" });
         }
 
-        // Buscamos los posts de ese autor
-        const posts = await pool.query(
-            "SELECT * FROM posts WHERE author_id = $1 ORDER BY id",
-            [authorId]
-        );
+        const posts = await postService.getPostsByAuthorId(authorId);
 
         res.status(200).json({
             msg: "Posts del autor",
-            author: autor.rows[0],
-            posts: posts.rows
+            author: autor,
+            posts: posts
         });
-
-    } catch (error) {
-
+       } catch (error) {
         console.error("Error al obtener los posts del autor:", error);
-
-        res.status(500).json({
-            msg: "Error al obtener los posts del autor"
-        });
-    }
-
-};
+        res.status(500).json({ msg: "Error al obtener los posts del autor" });
+    }};
 
 // POST /posts
 const posPosteo = async (req, res) => {
     try {
-        const {
-            author_id,
-            title,
-            content,
-            published
-        } = req.body;
-
-        const resultado = await pool.query(
-            `INSERT INTO posts
-                (author_id, title, content, published)
-             VALUES
-                ($1, $2, $3, $4)
-             RETURNING *`,
-            [author_id, title, content, published]
-        );
+        const nuevoPost = await postService.createPost(req.body);
 
         return res.status(201).json({
             msg: "Posteo agregado correctamente",
-            data: resultado.rows[0]
-        });
-
+            data: nuevoPost        });
     } catch (error) {
         console.error("Error al crear el post:", error);
+        if (error.code === "23503") {
+            return res.status(400).json({ msg: "El author_id proporcionado no existe" });
+        }
+        return res.status(500).json({ msg: "Error al crear el post" });
+    }};
 
-        return res.status(500).json({
-            msg: "Error al crear el post"
-        });
-    }
-};
-
-
-// PUT /posts/
+// PUT /posts/:id
 const putactualizarpost = async (req, res) => {
     try {
         const { id } = req.params;
+        const postActualizado = await postService.updatePost(id, req.body);
 
-        const {
-            author_id,
-            title,
-            content,
-            published
-        } = req.body;
-
-        const resultado = await pool.query(
-            `UPDATE posts
-             SET author_id = $1,
-                 title = $2,
-                 content = $3,
-                 published = $4
-             WHERE id = $5
-             RETURNING *`,
-            [author_id, title, content, published, id]
-        );
-
-        if (resultado.rows.length === 0) {
-            return res.status(404).json({
-                msg: `El posteo con id ${id} no fue encontrado`
-            });
+        if (!postActualizado) {
+            return res.status(404).json({ msg: `El posteo con id ${id} no fue encontrado` });
         }
 
         return res.status(200).json({
             msg: "El posteo fue actualizado correctamente",
-            data: resultado.rows[0]
+            data: postActualizado
         });
-
-    } catch (error) {
+       } catch (error) {
         console.error("Error al actualizar el post:", error);
-
-        return res.status(500).json({
-            msg: "Error al actualizar el post"
-        });
+        if (error.code === "23503") {
+            return res.status(400).json({ msg: "El author_id proporcionado no existe" });
+        }
+        return res.status(500).json({ msg: "Error al actualizar el post" });
     }
 };
 
-// DELETE /posts/
+// DELETE /posts/:id
 const deletepost = async (req, res) => {
-
-    try {
-
+  try {
         const { id } = req.params;
+        const postEliminado = await postService.deletePost(id);
 
-        const resultado = await pool.query(
-            "DELETE FROM posts WHERE id = $1 RETURNING *",
-            [id]
-        );
-
-        if (resultado.rows.length === 0) {
-            return res.status(404).json({
-                msg: `El posteo con id ${id} no fue encontrado`
-            });
+        if (!postEliminado) {
+            return res.status(404).json({ msg: `El posteo con id ${id} no fue encontrado` });
         }
 
         res.status(200).json({
             msg: "Posteo eliminado correctamente",
-            data: resultado.rows[0]
+            data: postEliminado
         });
-
-    } catch (error) {
-
+     } catch (error) {
         console.error("Error al eliminar el post:", error);
-
-        res.status(500).json({
-            msg: "Error al eliminar el post"
-        });
-    }
-
-};
+        res.status(500).json({ msg: "Error al eliminar el post" });
+    }};
 
 module.exports = {
     getPostController,

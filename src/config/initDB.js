@@ -11,7 +11,8 @@ const initializeDatabase = async () => {
             id SERIAL PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
             email VARCHAR(150) NOT NULL UNIQUE,
-            bio TEXT NOT NULL
+            bio TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     `);
 
