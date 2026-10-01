@@ -221,15 +221,16 @@ router.get('/posts', getPostController);
  *         required: true
  *         schema:
  *           type: integer
+ *         description: ID del post
  *     responses:
- *        200:
-    description: Posts del autor
-  400:
-    description: ID del autor inválido
-  404:
-    description: Autor no encontrado o no tiene posts
-  500:
-    description: Error al obtener los posts
+ *       200:
+ *         description: Post encontrado
+ *       400:
+ *         description: ID inválido
+ *       404:
+ *         description: Post no encontrado
+ *       500:
+ *         description: Error al obtener el post
  */
 router.get('/posts/:id', validarId, getByIspostsController);
 
