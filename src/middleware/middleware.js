@@ -5,12 +5,22 @@ const validateAuthorsData = (req, res, next) => {
     const { name, email, bio } = req.body;
 
     const camposFaltantes = ["name", "email", "bio"]
-        .filter(campo => !req.body[campo]);
+        .filter(campo => req.body[campo] == undefined);
 
     if (camposFaltantes.length > 0) {
         return res.status(400).json({
             msg: "No se pudo crear el autor, falta información",
             data: `Campos faltantes: ${camposFaltantes.join(", ")}`
+        });
+    }
+    if (typeof name !== "string" || name.trim() === "") {
+        return res.status(400).json({
+            msg: "El nombre debe ser un texto y no puede estar vacío"
+        });
+    }
+    if (typeof email !== "string" || email.trim() === "") {
+        return res.status(400).json({
+            msg: "El email debe ser un texto y no puede estar vacío"
         });
     }
 
@@ -19,6 +29,11 @@ const validateAuthorsData = (req, res, next) => {
     ) {
         return res.status(400).json({
             msg: "El correo electrónico no es válido"
+        });
+    }
+    if (typeof bio !== "string" || bio.trim() === "") {
+        return res.status(400).json({
+            msg: "La biografía debe ser un texto y no puede estar vacía"
         });
     }
 
