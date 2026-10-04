@@ -1,3 +1,4 @@
+//src/controllers/post.Controller.js 
 const postService = require("../services/post.service");
 const authorsService = require("../services/authors.service");
 
@@ -105,10 +106,7 @@ const deletepost = async (req, res) => {
             return res.status(404).json({ msg: `El posteo con id ${id} no fue encontrado` });
         }
 
-        res.status(200).json({
-            msg: "Posteo eliminado correctamente",
-            data: postEliminado
-        });
+        res.status(204).send();
      } catch (error) {
         console.error("Error al eliminar el post:", error);
         res.status(500).json({ msg: "Error al eliminar el post" });

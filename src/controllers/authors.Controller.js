@@ -1,3 +1,4 @@
+//src/controllers/authors.Controller.js 
 const authorsService = require("../services/authors.service");
 
 // GET /authors
@@ -79,17 +80,11 @@ const deleteauthor = async (req, res) => {
             return res.status(404).json({ msg: `El autor con id ${id} no fue encontrado` });
         }
 
-        res.status(200).json({
-            msg: "Autor eliminado correctamente",
-            data: autorEliminado
-        });
+        res.status(204).send();
       } catch (error) {
                 console.error("Error al eliminar autor:", error);
-        if (error.code === "23503") {
-            return res.status(409).json({
-                msg: "No se puede eliminar el autor porque tiene registros asociados"
-            });
-        }
+
+
         res.status(500).json({ msg: "Error al eliminar el autor" });
     }
 };

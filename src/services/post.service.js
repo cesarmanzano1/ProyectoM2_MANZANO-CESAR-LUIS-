@@ -1,3 +1,4 @@
+//src/services/post.service.js 
 const { pool } = require("../config/dbConnect");
 
 async function getAllPosts() {

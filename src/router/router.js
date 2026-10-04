@@ -159,9 +159,7 @@ router.post('/authors', validateAuthorsData, postaddauthor);
  *       200:
  *         description: Autor actualizado correctamente
  *       400:
- *         description: No se pudo crear el autor, falta información
- *       404:
- *         description: El correo electrónico no es válido
+ *         description: Datos de entrada inválidos (nombre no válido, correo electrónico incorrecto o faltante)
  *       500:
  *         description: Error al actualizar el autor
  */
@@ -183,7 +181,7 @@ router.put('/authors/:id', validarId, validateAuthorsData, putactualizarauthor);
  *           type: integer
  *         description: ID del autor
  *     responses:
- *       200:
+ *       204:
  *         description: Autor eliminado correctamente
  *       404:
  *         description: Autor no encontrado
@@ -371,7 +369,7 @@ router.put('/posts/:id', validarId,validateposteoData, putactualizarpost);
  *           type: integer
  *         description: ID del post
  *     responses:
- *       200:
+ *       204:
  *         description: Post eliminado correctamente
  *       404:
  *         description: Post no encontrado

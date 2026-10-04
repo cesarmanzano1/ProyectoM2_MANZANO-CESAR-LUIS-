@@ -1,69 +1,63 @@
-# 📚 API de Autores, Posts y Comentarios
+# 📚 API de Autores y Posts — Proyecto M2
 
-API REST desarrollada con **Node.js y Express** para gestionar autores, publicaciones y comentarios.
+API REST desarrollada con **Node.js y Express** para gestionar autores y publicaciones.
 
 El proyecto utiliza **PostgreSQL** como base de datos e implementa:
 
-- Operaciones CRUD.
-- Validaciones mediante middlewares.
-- Pruebas automatizadas con Vitest y Supertest.
-- Documentación de la API mediante Swagger / OpenAPI.
-- Despliegue en Railway.
-- Configuración para ejecución local.
-
----
-
-## 📚 Documentación de la API
-
-La API cuenta con documentación interactiva mediante **Swagger / OpenAPI**.
-
-👉 **[Swagger / OpenAPI - API desplegada](https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/api-docs)**
-
-![Swagger](img/swagger.png)
+* Operaciones CRUD para autores y posts.
+* Validaciones mediante middlewares.
+* Pruebas automatizadas con **Vitest y Supertest**.
+* Documentación de la API mediante **Swagger / OpenAPI**.
+* Persistencia de datos mediante PostgreSQL.
+* Despliegue en **Railway**.
+* Configuración mediante variables de entorno.
 
 ---
 
 ## 🚀 Tecnologías utilizadas
 
-- **Node.js**
-- **Express**
-- **PostgreSQL**
-- **Swagger / OpenAPI**
-- **Vitest**
-- **Supertest**
-- **Railway**
-- **dotenv**
+* **Node.js**
+* **Express**
+* **PostgreSQL**
+* **pg**
+* **dotenv**
+* **Swagger / OpenAPI**
+* **Vitest**
+* **Supertest**
+* **Railway**
+* **Git / GitHub**
 
 ---
 
-# 🌐 Ejecución en servidor
+# 📚 Documentación de la API
 
-La API se encuentra desplegada en **Railway**, por lo que puede utilizarse directamente desde el servidor sin necesidad de realizar una configuración local.
+La API cuenta con documentación interactiva mediante **Swagger / OpenAPI**.
 
-### 🔗 Swagger
+### Swagger en producción
 
-👉 **[Abrir documentación Swagger](https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/api-docs)**
+👉 **[Abrir Swagger / OpenAPI](https://proyectom2manzano-cesar-luis-production.up.railway.app/api-docs)**
 
-Desde Swagger se pueden consultar y probar los diferentes endpoints disponibles.
+![Swagger](img/swagger.png)
 
-![Despliegue en Railway](img/railway.png)
+Desde Swagger se pueden consultar y probar los diferentes endpoints de la API.
 
 ---
 
 # 💻 Ejecución local
 
-El proyecto también puede ejecutarse localmente utilizando **Node.js, Express y PostgreSQL**.
+## Requisitos
 
-Para ejecutar la API de forma local es necesario contar con:
+Para ejecutar el proyecto localmente es necesario tener instalado:
 
-- Node.js instalado.
-- PostgreSQL instalado y ejecutándose.
-- Una base de datos PostgreSQL local.
-- Las dependencias del proyecto instaladas.
+* **Node.js**
+* **PostgreSQL**
+* **Git**
+
+Además, se necesita una base de datos PostgreSQL local.
 
 ---
 
-## 1️⃣ Clonar el proyecto
+## 1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/cesarmanzano1/PROYECTOM2_MANZANO-CESAR-LUIS.git
@@ -72,7 +66,7 @@ cd PROYECTOM2_MANZANO-CESAR-LUIS
 
 ---
 
-## 2️⃣ Instalar las dependencias
+## 2. Instalar las dependencias
 
 Ejecutar:
 
@@ -82,37 +76,25 @@ npm install
 
 ---
 
-## 3️⃣ Crear la base de datos PostgreSQL
+## 3. Crear la base de datos
 
-Crear una base de datos local en PostgreSQL.
-
-Por ejemplo:
+Crear una base de datos PostgreSQL llamada, por ejemplo:
 
 ```sql
 CREATE DATABASE blog_db;
 ```
 
-Luego conectarse a la base de datos:
+Luego conectarse a esa base de datos:
 
 ```sql
 \c blog_db
 ```
 
-Las tablas necesarias para el funcionamiento de la API deben estar creadas en esta base de datos.
-
 ---
 
-## 4️⃣ Crear el archivo `.env`
+## 4. Configurar las variables de entorno
 
-El proyecto utiliza variables de entorno para configurar la conexión con PostgreSQL.
-
-Crear un archivo llamado:
-
-```text
-.env
-```
-
-en la raíz del proyecto.
+Crear un archivo `.env` en la raíz del proyecto.
 
 Ejemplo:
 
@@ -123,25 +105,49 @@ PGDATABASE=blog_db
 PGUSER=postgres
 PGPASSWORD=tu_contraseña
 NODE_ENV=development
+PORT=3000
 ```
 
-> ⚠️ Los valores deben modificarse de acuerdo con la configuración de PostgreSQL de cada usuario.
+Los valores deben modificarse de acuerdo con la configuración local de PostgreSQL.
 
-El archivo `.env` **no debe subirse a GitHub**, ya que puede contener información sensible como contraseñas.
+> ⚠️ El archivo `.env` no debe subirse a GitHub porque puede contener información sensible, como la contraseña de PostgreSQL.
 
 El proyecto incluye un archivo `.env.example` como referencia.
 
 ---
 
-## 5️⃣ Ejecutar la API localmente
+## 5. Ejecutar el setup de la base de datos
 
-Una vez configurada la base de datos y el archivo `.env`, ejecutar:
+El proyecto cuenta con un archivo de inicialización de la base de datos ubicado en:
+
+```text
+src/config/initDB.js
+```
+
+Este archivo se encarga de crear las tablas necesarias para el funcionamiento de la API.
+
+Para ejecutar la inicialización:
+
+```bash
+node src/config/initDB.js
+```
+
+Una vez ejecutado, la base de datos contará con las tablas necesarias para trabajar con:
+
+* `authors`
+* `posts`
+
+---
+
+## 6. Ejecutar la API
+
+Para iniciar el servidor:
 
 ```bash
 npm start
 ```
 
-La API estará disponible en:
+La API estará disponible localmente en:
 
 ```text
 http://localhost:3000
@@ -149,15 +155,15 @@ http://localhost:3000
 
 ---
 
-## 6️⃣ Documentación Swagger local
+# 📖 Documentación OpenAPI local
 
-La documentación Swagger estará disponible en:
+Con el servidor ejecutándose, Swagger estará disponible en:
 
 ```text
 http://localhost:3000/api-docs
 ```
 
-También se puede consultar la especificación OpenAPI desde:
+También se puede consultar la especificación OpenAPI en:
 
 ```text
 http://localhost:3000/api-docs.json
@@ -165,152 +171,203 @@ http://localhost:3000/api-docs.json
 
 ---
 
-# 📂 Entidades
+# 🗄️ Base de datos
 
-## 👤 Authors
+El proyecto utiliza **PostgreSQL** para almacenar la información.
 
-La entidad `authors` representa a los autores de las publicaciones.
+Las principales tablas utilizadas son:
 
-![Entidad Authors](img/authors.png)
+### Authors
 
----
+```text
+authors
+├── id
+├── name
+├── email
+├── bio
+└── created_at
+```
 
-## 📝 Posts
+### Posts
 
-La entidad `posts` representa las publicaciones realizadas por los autores.
+```text
+posts
+├── id
+├── title
+├── content
+├── author_id
+├── published
+└── created_at
+```
 
-![Entidad Posts](img/posteos.png)
+La relación entre las tablas es:
 
----
-
-
-
-# 🔗 Relaciones
-
-Las entidades de la API se encuentran relacionadas de la siguiente manera:
-
-- Un autor puede tener muchos posts.
-- Un post pertenece a un autor.
-
+* Un autor puede tener muchos posts.
+* Cada post pertenece a un autor mediante `author_id`.
 
 ![Relaciones de Entidades](img/relacion_entidades.png)
 
 ---
 
-# 🗄️ Base de datos
-
-El proyecto utiliza **PostgreSQL** para la persistencia de los datos.
-
-Las principales tablas utilizadas son:
-
-- `authors`
-- `posts`
-
----
-
-# 📡 Endpoints
+# 📡 Endpoints principales
 
 ## ❤️ Health Check
 
-| Método | Endpoint | Descripción |
-|---|---|---|
-| GET | `/health` | Verificar el estado de la API |
+| Método | Endpoint  | Descripción                   |
+| ------ | --------- | ----------------------------- |
+| GET    | `/health` | Verificar el estado de la API |
 
 ---
 
 ## 👤 Authors
 
-| Método | Endpoint | Descripción |
-|---|---|---|
-| GET | `/authors` | Obtener todos los autores |
-| GET | `/authors/:id` | Obtener un autor por ID |
-| POST | `/authors` | Crear un nuevo autor |
-| PUT | `/authors/:id` | Actualizar un autor |
-| DELETE | `/authors/:id` | Eliminar un autor |
+| Método | Endpoint       | Descripción               |
+| ------ | -------------- | ------------------------- |
+| GET    | `/authors`     | Obtener todos los autores |
+| GET    | `/authors/:id` | Obtener un autor por ID   |
+| POST   | `/authors`     | Crear un nuevo autor      |
+| PUT    | `/authors/:id` | Actualizar un autor       |
+| DELETE | `/authors/:id` | Eliminar un autor         |
 
 ---
 
 ## 📝 Posts
 
-| Método | Endpoint | Descripción |
-|---|---|---|
-| GET | `/posts` | Obtener todos los posts |
-| GET | `/posts/:id` | Obtener un post por ID |
-| GET | `/posts/author/:authorId` | Obtener los posts de un autor |
-| POST | `/posts` | Crear un nuevo post |
-| PUT | `/posts/:id` | Actualizar un post |
-| DELETE | `/posts/:id` | Eliminar un post |
+| Método | Endpoint                  | Descripción                   |
+| ------ | ------------------------- | ----------------------------- |
+| GET    | `/posts`                  | Obtener todos los posts       |
+| GET    | `/posts/:id`              | Obtener un post por ID        |
+| GET    | `/posts/author/:authorId` | Obtener los posts de un autor |
+| POST   | `/posts`                  | Crear un nuevo post           |
+| PUT    | `/posts/:id`              | Actualizar un post            |
+| DELETE | `/posts/:id`              | Eliminar un post              |
 
 ---
-
 
 # ✅ Validaciones
 
-La API cuenta con middlewares para validar los datos recibidos.
+La API cuenta con middleware para validar los datos recibidos.
 
-## 👤 Authors
+## Authors
 
-Se validan los siguientes campos:
+Se validan:
 
-- `name`
-- `email`
-- `bio`
+* `name`
+* `email`
+* `bio`
 
-También se verifica que:
+Además:
 
-- El correo electrónico tenga un formato válido.
-- El correo electrónico sea único.
+* Los campos requeridos no deben estar vacíos.
+* El email debe tener un formato válido.
+* No se permiten emails duplicados.
 
----
+## Posts
 
-## 📝 Posts
+Se validan:
 
-Se validan los siguientes campos:
+* `author_id`
+* `title`
+* `content`
+* `published`
 
-- `author_id`
-- `title`
-- `content`
-- `published`
+Además:
 
-El campo `published` debe ser de tipo booleano.
+* Los campos requeridos deben estar presentes.
+* `published` debe ser un valor booleano.
+* `author_id` debe corresponder a un autor existente.
 
 ---
 
 # 🧪 Pruebas automatizadas
 
-El proyecto utiliza **Vitest** y **Supertest** para realizar pruebas automatizadas de los endpoints.
+El proyecto utiliza **Vitest** y **Supertest** para realizar pruebas automatizadas.
 
-Para ejecutar las pruebas:
+Para ejecutar los tests:
 
 ```bash
 npx vitest run src/test/server.test.js
 ```
 
-Las pruebas verifican, entre otros aspectos:
+Las pruebas verifican diferentes funcionalidades de la API, entre ellas:
 
-- Funcionamiento del endpoint `/health`.
-- Disponibilidad de Swagger.
-- Obtención de autores.
-- Creación de autores.
-- Validación de datos.
-- Obtención de posts.
-- Creación de comentarios.
-- Validaciones de comentarios.
-- Códigos de respuesta HTTP.
+* Funcionamiento del endpoint `/health`.
+* Disponibilidad de Swagger.
+* Obtención de autores.
+* Obtención de un autor por ID.
+* Creación de autores.
+* Validación de datos de autores.
+* Obtención de posts.
+* Creación de posts.
+* Validación de datos de posts.
+* Códigos de respuesta HTTP.
+
+---
+
+# ☁️ Deployment en Railway
+
+La aplicación se encuentra desplegada en **Railway**.
+
+### 🔗 Repositorio
+
+👉 **[GitHub](https://github.com/cesarmanzano1/PROYECTOM2_MANZANO-CESAR-LUIS)**
+
+### 🌐 Public URL
+
+La API desplegada públicamente se encuentra disponible en:
+
+```text
+https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/
+```
+
+### 📚 Public URL de Swagger
+
+```text
+https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/api-docs
+```
+
+### 🔐 Variables de entorno
+
+En Railway se configuran las variables necesarias para la conexión con PostgreSQL.
+
+Entre ellas:
+
+```text
+PGHOST
+PGPORT
+PGDATABASE
+PGUSER
+PGPASSWORD
+PORT
+NODE_ENV
+```
+
+Las credenciales de PostgreSQL no se incluyen en el repositorio.
+
+### 🔗 Internal URL
+
+Railway proporciona una **Internal URL** para la comunicación interna entre los servicios del proyecto, especialmente para la conexión entre la aplicación y PostgreSQL.
+
+Esta URL se utiliza dentro del entorno de Railway y no está destinada al acceso público desde Internet.
+
+La **Public URL** es la utilizada para acceder a la API desde fuera de Railway.
+
+![Despliegue en Railway](img/railway.png)
 
 ---
 
 # 🤖 Uso de Inteligencia Artificial
 
-Durante el desarrollo del proyecto se utilizó Inteligencia Artificial como herramienta de apoyo para:
+Durante el desarrollo del proyecto se utilizó **Inteligencia Artificial** como herramienta de apoyo para:
 
-- Analizar y corregir errores en el código.
-- Ayudar en la creación de pruebas con Vitest y Supertest.
-- Orientar en la documentación con Swagger / OpenAPI.
-- Revisar la estructura y organización del proyecto.
-- Resolver inconvenientes durante el deployment en Railway.
+* Analizar y corregir errores en el código.
+* Resolver problemas relacionados con Node.js, Express y PostgreSQL.
+* Ayudar en la creación y revisión de pruebas con Vitest y Supertest.
+* Orientar en la documentación mediante Swagger / OpenAPI.
+* Resolver inconvenientes durante la configuración y deployment en Railway.
+* Revisar y mejorar la documentación del proyecto.
 
-La IA fue utilizada como herramienta de apoyo al desarrollo y aprendizaje, realizando posteriormente las modificaciones, pruebas y verificaciones correspondientes sobre el código.
+La Inteligencia Artificial fue utilizada como herramienta de apoyo al desarrollo y aprendizaje. Las soluciones propuestas fueron posteriormente revisadas, adaptadas, probadas y verificadas en el proyecto.
 
 ---
 
@@ -340,6 +397,10 @@ PROYECTOM2_MANZANO-CESAR-LUIS/
 │   ├── router/
 │   │   └── router.js
 │   │
+│   ├── services/
+│   │   ├── authors.service.js
+│   │   └── post.service.js
+│   │
 │   ├── test/
 │   │   └── server.test.js
 │   │
@@ -362,4 +423,4 @@ PROYECTOM2_MANZANO-CESAR-LUIS/
 
 **César Luis Manzano**
 
-Proyecto desarrollado como parte del **Módulo 2 - Desarrollo Backend**.
+Proyecto desarrollado como parte del **Proyecto M2 - Desarrollo Backend**.
