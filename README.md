@@ -80,6 +80,7 @@ npm install
 
 Crear una base de datos PostgreSQL llamada, por ejemplo:
 
+
 ```sql
 CREATE DATABASE blog_db;
 ```
@@ -96,16 +97,17 @@ Luego conectarse a esa base de datos:
 
 Crear un archivo `.env` en la raíz del proyecto.
 
-Ejemplo:
+Para la ejecución local se utilizan las siguientes variables:
 
 ```env
-PGHOST=localhost
-PGPORT=5432
-PGDATABASE=blog_db
-PGUSER=postgres
-PGPASSWORD=tu_contraseña
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=blog_db
+DB_USER=postgres
+DB_PASSWORD=tu_contraseña
 NODE_ENV=development
 PORT=3000
+
 ```
 
 Los valores deben modificarse de acuerdo con la configuración local de PostgreSQL.
@@ -126,10 +128,10 @@ src/config/initDB.js
 
 Este archivo se encarga de crear las tablas necesarias para el funcionamiento de la API.
 
-Para ejecutar la inicialización:
+La base de datos se inicializa automáticamente al ejecutar la aplicación:
 
 ```bash
-node src/config/initDB.js
+npm start
 ```
 
 Una vez ejecutado, la base de datos contará con las tablas necesarias para trabajar con:
@@ -328,19 +330,7 @@ https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/api-docs
 
 ### 🔐 Variables de entorno
 
-En Railway se configuran las variables necesarias para la conexión con PostgreSQL.
-
-Entre ellas:
-
-```text
-PGHOST
-PGPORT
-PGDATABASE
-PGUSER
-PGPASSWORD
-PORT
-NODE_ENV
-```
+En Railway se configuran las variables necesarias para la conexión con PostgreSQL y el funcionamiento de la aplicación.
 
 Las credenciales de PostgreSQL no se incluyen en el repositorio.
 
@@ -381,6 +371,10 @@ PROYECTOM2_MANZANO-CESAR-LUIS/
 ├── img/
 │
 ├── src/
+│   ├── base_de_datos/
+│   │   ├── seed.sql
+│   │   └── setup.sql
+│   │
 │   ├── config/
 │   │   ├── constsConfig.js
 │   │   ├── dbConnect.js

@@ -181,7 +181,7 @@ router.put('/authors/:id', validarId, validateAuthorsData, putactualizarauthor);
  *           type: integer
  *         description: ID del autor
  *     responses:
- *       204:
+ *       200:
  *         description: Autor eliminado correctamente
  *       404:
  *         description: Autor no encontrado
@@ -369,8 +369,8 @@ router.put('/posts/:id', validarId,validateposteoData, putactualizarpost);
  *           type: integer
  *         description: ID del post
  *     responses:
- *       204:
- *         description: Post eliminado correctamente
+ *       200:
+ *         description: Posteo eliminado correctamente
  *       404:
  *         description: Post no encontrado
  *       400:
