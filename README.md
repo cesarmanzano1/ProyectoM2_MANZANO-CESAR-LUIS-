@@ -153,6 +153,7 @@ La API estará disponible localmente en:
 
 ```text
 http://localhost:3000
+
 ```
 
 ---
@@ -290,6 +291,11 @@ Para ejecutar los tests:
 ```bash
 npx vitest run src/test/server.test.js
 ```
+o usa el comando:
+
+```bash
+npm test
+```
 
 Las pruebas verifican diferentes funcionalidades de la API, entre ellas:
 
@@ -312,20 +318,22 @@ La aplicación se encuentra desplegada en **Railway**.
 
 ### 🔗 Repositorio
 
-👉 **[GitHub](https://github.com/cesarmanzano1/PROYECTOM2_MANZANO-CESAR-LUIS)**
+👉 **[GitHub](https://github.com/cesarmanzano1/ProyectoM2_MANZANO-CESAR-LUIS-)**
 
 ### 🌐 Public URL
 
 La API desplegada públicamente se encuentra disponible en:
 
 ```text
-https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/
+https://proyectom2manzano-cesar-luis-production.up.railway.app/
+
 ```
 
 ### 📚 Public URL de Swagger
 
 ```text
-https://proyectom2manzano-cesar-luis-production-ec6b.up.railway.app/api-docs
+https://proyectom2manzano-cesar-luis-production.up.railway.app/api-docs
+
 ```
 
 ### 🔐 Variables de entorno
