@@ -60,7 +60,8 @@ Además, se necesita una base de datos PostgreSQL local.
 ## 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/cesarmanzano1/PROYECTOM2_MANZANO-CESAR-LUIS.git
+git clone https://github.com/cesarmanzano1/ProyectoM2_MANZANO-CESAR-LUIS-.git
+
 cd PROYECTOM2_MANZANO-CESAR-LUIS
 ```
 

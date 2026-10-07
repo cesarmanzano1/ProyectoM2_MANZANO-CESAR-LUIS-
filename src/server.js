@@ -4,7 +4,7 @@ const express = require("express");
 const swaggerUi = require("swagger-ui-express");
 const { swaggerSpec } = require("./swagger");
 const { router } = require("./router/router");
-const { requestLogger } = require("./middleware/middleware");
+const { requestLogger,errorHandler } = require("./middleware/middleware");
 const cors = require("cors");
 
 const app = express();
@@ -46,6 +46,9 @@ app.use(
 );
 
 app.use(router);
+app.use(errorHandler);
+
+
 
 module.exports = {
     app

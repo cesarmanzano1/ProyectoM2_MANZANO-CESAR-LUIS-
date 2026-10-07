@@ -26,7 +26,7 @@ const initializeDatabase = async () => {
             content TEXT NOT NULL,
             published BOOLEAN NOT NULL DEFAULT false,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (author_id) REFERENCES authors(id)
+            FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE CASCADE
         )
     `);
 
