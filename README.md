@@ -402,8 +402,6 @@ PROYECTOM2_MANZANO-CESAR-LUIS/
 │   └── swagger.js
 │
 ├── .env.example
-├── .gitignore
-├── enlaces.txt
 ├── index.js
 ├── package-lock.json
 ├── package.json
