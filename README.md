@@ -62,9 +62,11 @@ Además, se necesita una base de datos PostgreSQL local.
 ```bash
 git clone https://github.com/cesarmanzano1/ProyectoM2_MANZANO-CESAR-LUIS-.git
 
-cd PROYECTOM2_MANZANO-CESAR-LUIS
 ```
 
+```bash
+cd PROYECTOM2_MANZANO-CESAR-LUIS
+```
 ---
 
 ## 2. Instalar las dependencias
@@ -291,11 +293,13 @@ Para ejecutar los tests:
 
 ```bash
 npx vitest run src/test/server.test.js
+
 ```
 o usa el comando:
 
 ```bash
 npm test
+
 ```
 
 Las pruebas verifican diferentes funcionalidades de la API, entre ellas:
