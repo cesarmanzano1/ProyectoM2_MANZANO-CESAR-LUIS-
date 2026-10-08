@@ -143,8 +143,30 @@ Una vez ejecutado, la base de datos contará con las tablas necesarias para trab
 * `posts`
 
 ---
+## 6. Cargar datos de prueba (opcional)
+El proyecto permite cargar datos de ejemplo para facilitar las pruebas de los endpoints de autores y publicaciones.
 
-## 6. Ejecutar la API
+Para cargar los datos de prueba, ejecuta:
+
+```bash
+npm db:seed
+
+```
+
+Este comando ejecuta el archivo src/config/run-seed-sql.js, que lee y ejecuta las consultas SQL definidas en:
+
+src/base_de_datos/seed.sql
+
+Los datos de ejemplo incluyen:
+
+3 autores.
+5 posts asociados a sus respectivos autores.
+
+> ⚠️Importante: antes de ejecutar este comando, asegurarse de haber configurado correctamente las variables de entorno y de que la base de datos PostgreSQL esté disponible.
+
+La carga de datos es opcional y se utiliza para facilitar las pruebas manuales de la API.
+
+## 7. Ejecutar la API
 
 Para iniciar el servidor:
 
@@ -391,7 +413,8 @@ PROYECTOM2_MANZANO-CESAR-LUIS/
 │   ├── config/
 │   │   ├── constsConfig.js
 │   │   ├── dbConnect.js
-│   │   └── initDB.js
+│   │   ├── initDB.js
+│   │   └── run-seed-sql.js
 │   │
 │   ├── controllers/
 │   │   ├── authors.Controller.js

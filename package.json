@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "vitest",
+    "db:seed": "node src/config/run-seed-sql.js",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
   },
