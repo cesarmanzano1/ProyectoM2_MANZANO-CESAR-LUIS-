@@ -149,8 +149,7 @@ El proyecto permite cargar datos de ejemplo para facilitar las pruebas de los en
 Para cargar los datos de prueba, ejecuta:
 
 ```bash
-npm db:seed
-
+npm run db:seed
 ```
 
 Este comando ejecuta el archivo src/config/run-seed-sql.js, que lee y ejecuta las consultas SQL definidas en:
